@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Random;
-
+/**
+ * Generates input files based on screen Dimension using {@link Toolkit}
+ * All records (including malformed) are generated based on {@link Random} class and limited by dimensions
+ * */
 public class InputGenerator {
     private static final Logger log = Logger.getLogger(InputGenerator.class);
 

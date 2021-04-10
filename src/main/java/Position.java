@@ -1,9 +1,14 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.IllegalFormatException;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+/**
+ * Input file
+ * @x - x position
+ * @y - y position
+ * @uid - user id
+ * @time - parsed timestamp
+ * */
 public class Position {
     private final int x;
     private final int y;
@@ -13,27 +18,14 @@ public class Position {
     private final String datePattern = "(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{1})$";
     private final String digitPattern = "(\\d+)";
 
-    // 959 306 1003 2021-04-01 00:02:00.0
+    /**Inits from input record*/
     public Position(String line){
-        Matcher matcher = getMatcher(line, datePattern);
-        this.time = LocalDateTime.parse(getSubString(matcher, line), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.s"));
-        matcher = getMatcher(line, digitPattern);
-        this.x = Integer.parseInt(getSubString(matcher, line));
-        this.y = Integer.parseInt(getSubString(matcher, line));
-        this.uid = Integer.parseInt(getSubString(matcher, line));
-    }
-
-    private String getSubString(Matcher matcher,String line){
-        if (matcher.find()){
-            return line.substring(matcher.start(), matcher.end());
-        }
-        else throw new IllegalStateException();
-    }
-
-    private Matcher getMatcher(String line, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(line);
-        return matcher;
+        Matcher matcher = RegexMatcher.getMatcher(line, datePattern);
+        this.time = LocalDateTime.parse(RegexMatcher.getSubString(matcher, line), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.s"));
+        matcher = RegexMatcher.getMatcher(line, digitPattern);
+        this.x = Integer.parseInt(RegexMatcher.getSubString(matcher, line));
+        this.y = Integer.parseInt(RegexMatcher.getSubString(matcher, line));
+        this.uid = Integer.parseInt(RegexMatcher.getSubString(matcher, line));
     }
 
     public LocalDateTime getTime() {

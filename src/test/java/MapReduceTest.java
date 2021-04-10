@@ -26,21 +26,18 @@ public class MapReduceTest {
         mapDriver = MapDriver.newMapDriver(mapper);
         reduceDriver = ReduceDriver.newReduceDriver(reducer);
         mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);
-
         position = new Position(testPosition);
-        AreaDictionary dictionary = AreaDictionary.getInstance();
-        dictionary.generateAreas();
-        area = dictionary.getArea(position.getX(), position.getY());
-
+        AreaDictionary areaDictionary = AreaDictionary.getInstance();
         TemperatureDictionary temperatureDictionary = TemperatureDictionary.getInstance();
-        temperatureDictionary.generateTemperatures();
+
+        area = AreaDictionary.getInstance().getArea(position.getX(), position.getY());
     }
 
     @Test
     public void testMapper() throws IOException {
         mapDriver
                 .withInput(new LongWritable(), new Text(testPosition))
-                .withOutput(new Text(area.name), new IntWritable(1))
+                .withOutput(new Text(area.getName()), new IntWritable(1))
                 .runTest();
     }
 
@@ -50,8 +47,22 @@ public class MapReduceTest {
         values.add(new IntWritable(1));
         values.add(new IntWritable(1));
 
-        String value = TemperatureDictionary.getInstance()
-                .getTemperature(values.size());
+        String value = TemperatureDictionary.getInstance().getTemperature(values.size());
+        reduceDriver
+                .withInput(new Text(testPosition), values)
+                .withOutput(new Text(testPosition), new Text(value))
+                .runTest();
+    }
+
+    @Test
+    public void testBigReducer() throws IOException {
+        List<IntWritable> values = new ArrayList<IntWritable>();
+
+        for (int i = 0; i < 5000; i++) {
+            values.add(new IntWritable(1));
+        }
+
+        String value = TemperatureDictionary.getInstance().getTemperature(values.size());
         reduceDriver
                 .withInput(new Text(testPosition), values)
                 .withOutput(new Text(testPosition), new Text(value))
@@ -63,7 +74,7 @@ public class MapReduceTest {
         mapReduceDriver
                 .withInput(new LongWritable(), new Text(testPosition))
                 .withInput(new LongWritable(), new Text(testPosition))
-                .withOutput(new Text(area.name), new Text("LOW"))
+                .withOutput(new Text(area.getName()), new Text("LOW"))
                 .runTest();
     }
 }

@@ -1,4 +1,3 @@
-docker-compose.yml
-hadoop.env
 target
 .idea
+click-counter.iml

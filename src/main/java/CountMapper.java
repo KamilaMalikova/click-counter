@@ -5,6 +5,12 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
+/**
+ * Mapper: gets position from text value.
+ * Determines area position belongs to {@link AreaDictionary}.
+ * Returns area name and one
+ * If area is not found returns UNKNOWN area
+ * */
 public class CountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
@@ -12,9 +18,9 @@ public class CountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         try {
             Position position = new Position(value.toString());
-            AreaDictionary dictionary = AreaDictionary.getInstance();
-            Area area = dictionary.getArea(position.getX(), position.getY());
-            word.set(area.name);
+            AreaDictionary areaDictionary = AreaDictionary.getInstance();
+            Area area = areaDictionary.getArea(position.getX(), position.getY());
+            word.set(area.getName());
             context.write(word, one);
         }catch (Exception e){
             context.getCounter(CounterType.MALFORMED).increment(1);
