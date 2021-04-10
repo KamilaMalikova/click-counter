@@ -1,8 +1,6 @@
 import org.apache.log4j.Logger;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -11,10 +9,15 @@ import java.util.Random;
  * Generates input files based on screen Dimension using {@link Toolkit}
  * All records (including malformed) are generated based on {@link Random} class and limited by dimensions
  * */
+
 public class InputGenerator {
     private static final Logger log = Logger.getLogger(InputGenerator.class);
 
     public static void main(String[] args) throws IOException {
+        int records = 1_000_000;
+        if (args.length >= 1){
+            records = Integer.parseInt(args[0]);
+        }
         String format = "%d %d %d %s\n";
         Dimension size
                 = Toolkit.getDefaultToolkit().getScreenSize();
@@ -24,7 +27,7 @@ public class InputGenerator {
         Random randomUID = new Random();
         Random randomMALFORMED = new Random();
         LocalDateTime prevTimeStamp = LocalDateTime.of(2021, 4, 1, 0, 0, 0);
-        while(i < 100_000){
+        while(i < records){
             int x = randomX.nextInt(size.width);
             int y = randomY.nextInt(size.height);
             int uid = randomUID.nextInt(10)+1000;

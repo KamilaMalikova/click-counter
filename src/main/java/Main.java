@@ -1,15 +1,3 @@
-//a(3), b(1), c(8)
-/*Программа, которая строит тепловую карту кликов по странице
-Входные данные: координаты нажатия x,y, userId, timestamp
-    (справочник областей экрана: <координаты области> - <название области>,
-    справочник температур: <диапазон значений> - <температура (высокая, средняя, низкая)>)
-Выходные данные: название области экрана, количество нажатий (температура)*/
-
-//Output
-//CSV файл
-
-//Количество редьюсеров должно быть больше 1. Приложить скриншот успешного завершения MapReduce Job с количеством редьюсеров больше 1.
-
 import lombok.extern.log4j.Log4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -21,12 +9,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
