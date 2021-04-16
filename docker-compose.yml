@@ -13,6 +13,7 @@ services:
       - ./output:/click-counter/output
       - ./input:/click-counter/input
       - ./target:/click-counter/job
+      - ./dict:/click-counter/dict
       - ./init:/init
     #command: sh /init/init.sh
     environment:

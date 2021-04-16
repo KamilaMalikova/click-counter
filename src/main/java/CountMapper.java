@@ -15,7 +15,7 @@ public class CountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
     @Override
-    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+    protected void map(LongWritable key, Text value, Context context) {
         try {
             Position position = new Position(value.toString());
             AreaDictionary areaDictionary = AreaDictionary.getInstance();

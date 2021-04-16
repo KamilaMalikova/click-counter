@@ -15,7 +15,7 @@ public class Position {
     private final int uid;
     private LocalDateTime time;
 
-    private final String datePattern = "(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{1})$";
+    private final String datePattern = "(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{2})$";
     private final String digitPattern = "(\\d+)";
 
     /**Inits from input record*/

@@ -16,7 +16,7 @@ public class MapReduceTest {
     private ReduceDriver<Text, IntWritable, Text, Text> reduceDriver;
     private MapReduceDriver<LongWritable, Text, Text, IntWritable, Text, Text> mapReduceDriver;
 
-    private final String testPosition = "120 160 1004 2021-04-01 00:02:00.0" ;
+    private final String testPosition = "120 160 1004 2021-04-01 00:02:00.00" ;
     private Position position;
     private Area area;
     @Before
